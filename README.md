@@ -1,2 +1,2 @@
 # BankingSystemProject2Team3
- The Banking System will function as an emulation of a real-world banking system.
+ The Banking System will function as an emulation of a real-world banking system. Core features of all banking systems are available for end users, such as creating an account(s), depositing and withdrawal from a user’s accounts, and the ability to transfer funds between accounts. Users also have the functionality to view and update their personal information on a dedicated page. At least 4 additional functionalities will be added to the Banking System’s user stories.
