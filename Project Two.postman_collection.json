@@ -1,0 +1,159 @@
+{
+	"info": {
+		"_postman_id": "92ac89c6-1659-4c10-9e63-eb57f878080d",
+		"name": "Project Two",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "20789155"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register a Customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"david\",\r\n    \"lastName\": \"cogbill\",\r\n    \"email\": \"dlc@gmail.com\",\r\n    \"username\": \"dlc\",\r\n    \"password\": \"password\",\r\n    \"streetAddress\": \"111 Main Street\",\r\n    \"city\": \"Springfield\",\r\n    \"state\": \"MA\",\r\n    \"zip\": \"01109\",\r\n    \"phone\": \"4135556789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/auth/register"
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/auth/login"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Open new account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkbGMiLCJJZCI6MSwiUm9sZSI6IkN1c3RvbWVyIiwiaWF0IjoxNjg4Njc1NjUzLCJleHAiOjE2ODg3NjIwNTN9.reobAiAK_qcF8X4grAFzRUKFm2wOwaaeqrtyTbo9b3X_0UflgVWJl4MSi_H2-oEJlK6ECpDtvkDqxdIt0KosAQ"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "http://localhost:8080/transactions/open/CREDIT/200"
+					},
+					"response": []
+				},
+				{
+					"name": "Deposit",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "http://localhost:8080/transactions/1/deposit/350"
+					},
+					"response": []
+				},
+				{
+					"name": "Withdrawal",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkbGMiLCJJZCI6MSwiUm9sZSI6IkN1c3RvbWVyIiwiaWF0IjoxNjg4Njc1NjUzLCJleHAiOjE2ODg3NjIwNTN9.reobAiAK_qcF8X4grAFzRUKFm2wOwaaeqrtyTbo9b3X_0UflgVWJl4MSi_H2-oEJlK6ECpDtvkDqxdIt0KosAQ"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"url": "http://localhost:8080/transactions/withdrawal/2/50"
+					},
+					"response": []
+				},
+				{
+					"name": "Transfer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkbGMiLCJJZCI6MSwiUm9sZSI6IkN1c3RvbWVyIiwiaWF0IjoxNjg4Njc2MzgzLCJleHAiOjE2ODg3NjI3ODN9.IuAsvIF7OPyLnridYeagLx-CdbpaLXM6TjFB_xBLoR4TRiWCH7wHPweImM9T8DTi2P1QJBELNbt6ovE8GscE2g"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"url": "http://localhost:8080/transactions/transfer/2/1/250"
+					},
+					"response": []
+				},
+				{
+					"name": "Payment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkbGMiLCJJZCI6MSwiUm9sZSI6IkN1c3RvbWVyIiwiaWF0IjoxNjg4Njc2MzgzLCJleHAiOjE2ODg3NjI3ODN9.IuAsvIF7OPyLnridYeagLx-CdbpaLXM6TjFB_xBLoR4TRiWCH7wHPweImM9T8DTi2P1QJBELNbt6ovE8GscE2g"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"url": "http://localhost:8080/transactions/payment/4/10000"
+					},
+					"response": []
+				},
+				{
+					"name": "Charge",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkbGMiLCJJZCI6MSwiUm9sZSI6IkN1c3RvbWVyIiwiaWF0IjoxNjg4Njc2MzgzLCJleHAiOjE2ODg3NjI3ODN9.IuAsvIF7OPyLnridYeagLx-CdbpaLXM6TjFB_xBLoR4TRiWCH7wHPweImM9T8DTi2P1QJBELNbt6ovE8GscE2g"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"url": "http://localhost:8080/transactions/charge/5/200"
+					},
+					"response": []
+				},
+				{
+					"name": "Status update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkbGMiLCJJZCI6MSwiUm9sZSI6IkN1c3RvbWVyIiwiaWF0IjoxNjg4Njc2MzgzLCJleHAiOjE2ODg3NjI3ODN9.IuAsvIF7OPyLnridYeagLx-CdbpaLXM6TjFB_xBLoR4TRiWCH7wHPweImM9T8DTi2P1QJBELNbt6ovE8GscE2g"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"url": "http://localhost:8080/transactions/status/5/Approved"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

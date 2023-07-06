@@ -53,7 +53,7 @@ public class SecurityConfig {
                 .antMatchers("/customers/{id}/").hasAuthority(customer)
                 .antMatchers(HttpMethod.PUT, "/customers").hasAuthority(customer)
                 .antMatchers("/transactions/**").hasAuthority(customer)
-                .antMatchers(HttpMethod.POST,"/transactions/status/{id}/{status}").hasAuthority(manager)
+                .antMatchers(HttpMethod.POST,"/transactions/status/{id  }/{status}").hasAuthority(manager)
                 .antMatchers(HttpMethod.GET,"/transactions/").hasAuthority(manager)
                 .and()
                 .httpBasic();
