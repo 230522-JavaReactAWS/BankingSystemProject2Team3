@@ -33,6 +33,11 @@ public class Transaction {
 
     private String description;
 
+    //Customer who initiated transaction
+    @ManyToOne
+    @JoinColumn(name="customer_id")
+    private Customer customer;
+
     //The origin account of the transaction.
     @ManyToOne
     @JoinColumn(name="origin_id")
@@ -49,19 +54,30 @@ public class Transaction {
     @Column(name="created_at",updatable=false)
     private Date createdAt;
 
-
-    public Transaction(String type, float amount, Account account, String description) {
+    public Transaction(String type, float amount, String description, Customer customer, Account origin, Account target, Date createdAt) {
         this.type = type;
         this.amount = amount;
+        this.description = description;
+        this.customer = customer;
+        this.origin = origin;
+        this.target = target;
+        this.createdAt = new Date();
+    }
+
+    public Transaction(String type, float amount, Customer customer, Account account, String description) {
+        this.type = type;
+        this.amount = amount;
+        this.customer = customer;
         this.origin = account;
-        this.target = account;
+        this.target = null;
         this.description = description;
         this.createdAt = new Date();
     }
 
-    public Transaction(String type, float amount, Account originAccount, Account targetAccount, String description) {
+    public Transaction(String type, float amount, Customer customer, Account originAccount, Account targetAccount, String description) {
         this.type = type;
         this.amount = amount;
+        this.customer = customer;
         this.origin = originAccount;
         this.target = targetAccount;
         this.description = description;

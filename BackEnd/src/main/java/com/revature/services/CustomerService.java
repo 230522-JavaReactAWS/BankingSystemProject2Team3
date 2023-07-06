@@ -24,6 +24,8 @@ public class CustomerService {
 
     public Customer getCustomerById(int id){ return customerDAO.findById(id).orElseThrow(); }
 
+    public Customer getCustomerByUsername(String username){ return customerDAO.findByUsername(username).orElseThrow(); }
+
     public Customer createCustomer(Customer customer){
         Customer newCustomer = customerDAO.save(customer);
         return newCustomer;

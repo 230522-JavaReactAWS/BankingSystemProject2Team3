@@ -1,5 +1,6 @@
 package com.revature.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -28,15 +29,17 @@ public class Account {
 
     private float balance;
 
-    @Column(name = "application_amount")
+    @Column(name = "lending_amount")
     private float lendingAmount;
 
     //Many accounts have one status PENDING, APPROVED, or DENIED
     @ManyToOne
+    @JoinColumn(name="status_id_fk")
     private Status status;
 
 
     //Many accounts are owned by one customer
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="customer_id_fk")
     private Customer customer;

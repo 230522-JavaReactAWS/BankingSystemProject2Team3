@@ -61,4 +61,21 @@ public class Customer {
     @JsonManagedReference
     @OneToMany(mappedBy = "customer")
     private List<Account> accounts;
+
+
+    public Customer(String firstName, String lastName, String username,
+                    String email, String password, String streetAddress,
+                    String city, String state, String zip, String phone, Role role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.streetAddress = streetAddress;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.phone = phone;
+        this.role = role;
+    }
 }

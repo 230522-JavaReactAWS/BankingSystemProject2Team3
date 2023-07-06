@@ -7,6 +7,7 @@ import com.revature.daos.TransactionDAO;
 import com.revature.models.Account;
 import com.revature.models.Customer;
 import com.revature.models.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class TransactionService {
     private final CustomerDAO customerDAO;
     private final StatusDAO statusDAO;
 
+    @Autowired
     public TransactionService(TransactionDAO transactionDAO, AccountDAO accountDAO, CustomerDAO customerDAO, StatusDAO statusDAO) {
         this.transactionDAO = transactionDAO;
         this.accountDAO = accountDAO;
@@ -28,22 +30,26 @@ public class TransactionService {
 
     public List<Transaction> getAllTransactions(){ return transactionDAO.findAll(); }
 
+    public List<Transaction> getCustomerTransactions(Customer c){ return transactionDAO.findByCustomer(c); }
+
+    public Transaction getTransactionById(int id){ return transactionDAO.findById(id).orElseThrow(); }
+
     //Different Methods of creating transactions
     //All functionality involving an account should create a new transaction
     //TODO: validate account types before transaction
 
     //Open any account
-    public Transaction openAccount(float startingBalance, String type, int cid){
+    public Transaction openAccount(float startingBalance, String type, String username){
 
         //Find customer
-        Customer targetCustomer = customerDAO.findById(cid).orElseThrow();
+        Customer targetCustomer = customerDAO.findByUsername(username).orElseThrow();
 
         //if Credit or loan, Create new account with type, lendingAmount = startingBalance, found customer and pending status
-        if( type.equals("CREDIT") || type.equals("LOAN")){
+        if( type.toUpperCase().equals("CREDIT") || type.toUpperCase().equals("LOAN")){
             Account newAccount = new Account(
-                    type,
+                    type.toUpperCase(),
                     startingBalance,
-                    statusDAO.findByStatusName("PENDING"),
+                    statusDAO.findByStatusName("Pending"),
                     targetCustomer
             );
             newAccount = accountDAO.save(newAccount);
@@ -52,8 +58,9 @@ public class TransactionService {
             Transaction newTransaction = transactionDAO.save( new Transaction(
                     "Open",
                     startingBalance,
+                    targetCustomer,
                     newAccount,
-                    type.equals("Credit")?"Opened new " + type + " account with limit: " + startingBalance
+                    type.toUpperCase().equals("CREDIT")?"Opened new " + type + " account with limit: " + startingBalance
                             :"Opened new " + type + " account borrowing: " + startingBalance
             ));
             return newTransaction;
@@ -72,6 +79,7 @@ public class TransactionService {
         Transaction newTransaction = transactionDAO.save( new Transaction(
                 "Open",
                 startingBalance,
+                targetCustomer,
                 newAccount,
                 "Opened new " + type + " account with starting balance: " + startingBalance
         ));
@@ -80,7 +88,10 @@ public class TransactionService {
 
     //One account deposit
     //TODO: Cannot deposit in credit or loan type
-    public Transaction deposit(float amount, int aid){
+    public Transaction deposit(float amount, int aid, String username){
+
+        //Find customer
+        Customer targetCustomer = customerDAO.findByUsername(username).orElseThrow();
 
         //Find account, then deposit amount
         Account targetAccount = accountDAO.findById(aid).orElseThrow();
@@ -88,8 +99,9 @@ public class TransactionService {
 
         //Create transaction with amount, type, account(origin and target are the same), description
         Transaction newTransaction = transactionDAO.save(new Transaction(
-                "Deposit",
+                "Income",
                 amount,
+                targetCustomer,
                 targetAccount,
                 "Deposited " + amount + " to Account: " + targetAccount.getId()
         ));
@@ -99,7 +111,10 @@ public class TransactionService {
 
     //One account withdrawal
     //TODO: Cannot withdraw from credit
-    public Transaction withdrawal(float amount, int aid){
+    public Transaction withdrawal(float amount, int aid, String username){
+
+        //Find customer
+        Customer targetCustomer = customerDAO.findByUsername(username).orElseThrow();
 
         //Find account, then withdrawal amount
         Account targetAccount = accountDAO.findById(aid).orElseThrow();
@@ -107,8 +122,9 @@ public class TransactionService {
 
         //Create transaction with amount, type, account(origin and target are the same)
         Transaction newTransaction = transactionDAO.save(new Transaction(
-                "Witdrawal",
+                "Expense",
                 amount,
+                targetCustomer,
                 targetAccount,
                 "Withdrew " + amount + " from Account: " + targetAccount.getId()
         ));
@@ -118,7 +134,10 @@ public class TransactionService {
     //Transfer between checking or savings accounts
     //transfer amount, origin account, target account
     //TODO: target cannot be loan type
-    public Transaction transfer(float amount, int oid,int tid){
+    public Transaction transfer(float amount, int oid,int tid, String username){
+
+        //Find customer
+        Customer targetCustomer = customerDAO.findByUsername(username).orElseThrow();
 
         //find both accounts
         Account originAccount = accountDAO.findById(oid).orElseThrow();
@@ -132,6 +151,7 @@ public class TransactionService {
         Transaction newTransaction = transactionDAO.save(new Transaction(
                 "Transfer",
                 amount,
+                targetCustomer,
                 originAccount,
                 targetAccount,
                 "Tranferred " + amount + " from " + originAccount.getType() + " Account: " + originAccount.getId() + " to " + targetAccount.getType() + " " + targetAccount.getId()
@@ -141,7 +161,12 @@ public class TransactionService {
 
     //Payment to lending account
     //payment amount, target account
-    public Transaction lendingPayment(float amount, int aid){
+    //TODO: Must be credit or loan account
+    public Transaction lendingPayment(float amount, int aid, String username){
+
+        //Find customer
+        Customer targetCustomer = customerDAO.findByUsername(username).orElseThrow();
+
         //Find Lending account, execute payment
         Account targetAccount = accountDAO.findById(aid).orElseThrow();
         targetAccount.payment(amount);
@@ -150,23 +175,30 @@ public class TransactionService {
         Transaction newTransaction = transactionDAO.save(new Transaction(
                 "Payment",
                 amount,
+                targetCustomer,
                 targetAccount,
-                "Paid " + amount + " to " + targetAccount.getType() + "Account: " + targetAccount.getId()
+                "Paid " + amount + " to " + targetAccount.getType() + " Account: " + targetAccount.getId()
         ));
 
         return newTransaction;
     }
 
     //Charge a credit card
-    public Transaction creditCharge(float amount, int aid){
+    //TODO: Must be credit account
+    public Transaction creditCharge(float amount, int aid, String username){
+
+        //Find customer
+        Customer targetCustomer = customerDAO.findByUsername(username).orElseThrow();
+
         //Find account, execute charge
         Account targetAccount = accountDAO.findById(aid).orElseThrow();
         targetAccount.charge(amount);
 
         //Create transaction with amount and account
         Transaction newTransaction = transactionDAO.save(new Transaction(
-                "Charge",
+                "Expense",
                 amount,
+                targetCustomer,
                 targetAccount,
                 "Charged " + amount + " to " + targetAccount.getType() + "Account: " + targetAccount.getId()
         ));
@@ -176,7 +208,12 @@ public class TransactionService {
 
     //Lending account status update
     //method needs id of account and new status
-    public Transaction updateStatus(int id, String status){
+    //TODO: Must be credit or loan account
+    public Transaction updateStatus(int id, String status, String username){
+
+        //Find manager
+        Customer targetCustomer = customerDAO.findByUsername(username).orElseThrow();
+
         //find account, execute status update
         Account target = accountDAO.findById(id).orElseThrow();
         target.setStatus(statusDAO.findByStatusName(status));
@@ -185,8 +222,11 @@ public class TransactionService {
         Transaction newTransaction = transactionDAO.save(new Transaction(
                 "Status",
                 0,
+                targetCustomer,
                 target,
-                target.getType() + " Account " + target.getId() + " has been approved for " + target.getLendingAmount()
+                //If Approved or else
+                status.equals("Approved")?target.getType() + " Account " + target.getId() + " has been approved for " + target.getLendingAmount()
+                        :target.getType() + " Account " + target.getId() + " has been denied"
         ));
 
         return newTransaction;

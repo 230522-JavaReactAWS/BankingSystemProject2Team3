@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface TransactionDAO extends JpaRepository<Transaction, Integer> {
 
-    List<Transaction> findByAccount(Account account);
+    List<Transaction> findByOrigin(Account account);
 
     List<Transaction> findByCustomer(Customer customer);
 }
