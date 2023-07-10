@@ -1,38 +1,26 @@
-.App {
-  text-align: center;
+html {
+  background-image: url(../public/revatrustBackground.png); 
+  background-size: cover;
+  height: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.navBar {
+  background-color: rgb(243, 106, 38);
+  border-bottom-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  margin: 0px 20px 20px  20px auto;
+  padding: 25px 10px 25px 10px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-between;
 }
 
-.App-link {
-  color: #61dafb;
+.navLogo {
+  width: 300px;
+  height: 94px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.router {
+  background: rgb(255, 255, 255, 0.6);
+  border-radius: 30px;
+  margin: 20px 20px auto;
 }
