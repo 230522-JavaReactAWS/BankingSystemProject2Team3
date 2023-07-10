@@ -1,0 +1,35 @@
+.dashboard {
+    height: 100dvh;
+    width: 100vw;
+}
+
+.navLogo {
+    height: 3em;
+}
+
+.dark .accountAccordion {
+    background-color: var(--box-shadow);
+    color: white;
+}
+
+.accountType {
+    color: var(--dark-gray);
+}
+
+.dark .accountType {
+    color: var(--gray);
+}
+
+.accountAmounts {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.accountAmounts p {
+    font-size: 0.8em;
+}
+
+.accountAmounts :nth-child(1) {
+    font-weight: 700;
+}

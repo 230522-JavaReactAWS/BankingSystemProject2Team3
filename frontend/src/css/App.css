@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto";
+}
+
+:root {
+    --orange: #F26925;
+    --white: #FFF;
+    --dark-gray: #474C55;
+    --blue: #72A4C2;
+    --yellow: #FCB414;
+    --gray: #B9B9BA;
+    --dark-bg: #121212eb;
+    --box-shadow: rgb(0, 0, 0, 0.3);
+}
+
+body {
+    transition: 0.4s;
+}
+
+.dark {
+    background-color: var(--dark-bg);
+    color: var(--white);
+}
