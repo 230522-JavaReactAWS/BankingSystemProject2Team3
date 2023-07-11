@@ -17,7 +17,8 @@ export default function Transactions() {
             type: "withdrawal",
             amount: "$79.99",
             from: "Rafael",
-            to: "Grocery store"
+            to: "Grocery store",
+            balance: "$100"
         },
         {
             date: "7/11/2023",
@@ -25,7 +26,8 @@ export default function Transactions() {
             type: "withdrawal",
             amount: "$189.47",
             from: "Rafael",
-            to: "Mall"
+            to: "Mall",
+            balance: "$240"
         },
         {
             date: "7/11/2023",
@@ -33,7 +35,8 @@ export default function Transactions() {
             type: "deposit",
             amount: "$679.99",
             from: "Work",
-            to: "Rafael"
+            to: "Rafael",
+            balance: "$600"
         }
     ]
 
@@ -52,8 +55,7 @@ export default function Transactions() {
                                 <TableCell>Description</TableCell>
                                 <TableCell>Type</TableCell>
                                 <TableCell>Amount</TableCell>
-                                <TableCell>From</TableCell>
-                                <TableCell>To</TableCell>
+                                <TableCell>Balance</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -61,11 +63,10 @@ export default function Transactions() {
                                 transactionsData.map((transaction, i) => (
                                     <TableRow key={i}>
                                         <TableCell>{transaction.date}</TableCell>
-                                <TableCell>{transaction.description}</TableCell>
-                                <TableCell>{transaction.type}</TableCell>
-                                <TableCell>{transaction.amount}</TableCell>
-                                <TableCell>{transaction.from}</TableCell>
-                                <TableCell>{transaction.to}</TableCell>
+                                        <TableCell>{transaction.description}</TableCell>
+                                        <TableCell>{transaction.type}</TableCell>
+                                        <TableCell>{transaction.amount}</TableCell>
+                                        <TableCell>{transaction.balance}</TableCell>
                                     </TableRow>
                                 ))
                             }
