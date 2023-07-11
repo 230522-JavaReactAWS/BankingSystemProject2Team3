@@ -63,7 +63,7 @@ export default function NavBar() {
                             >
                                 {pages.map((page, i) => (
                                     <MenuItem onClick={handleCloseNav} key={i}>
-                                        <a style={{textDecoration: "none", color: "black"}} href={`/dashboard/${page.split(" ")[0].toLowerCase()}`}>{page}</a>
+                                        <a style={{textDecoration: "none", color: "black"}} href={`/${page.split(" ")[0].toLowerCase()}`}>{page}</a>
                                     </MenuItem>
                                 ))}
                             </Menu>
@@ -78,7 +78,7 @@ export default function NavBar() {
                             {pages.map((page, i) => {
                                 return (
                                     <Button
-                                        href={`/dashboard/${page.split(" ")[0].toLowerCase()}`}
+                                        href={`/${page.split(" ")[0].toLowerCase()}`}
                                         sx={{
                                             color: "white", fontSize: "1em"
                                         }}
