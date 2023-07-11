@@ -11,27 +11,28 @@ import ApplyForLoan from './pages/applyForLoan';
 //Creating Router instance
 const router = createBrowserRouter([
     {
-        path: "/dashboard",
+        path: "/",
         element: <Dashboard />,
         children: [
             {
-                path: "/dashboard/accounts",
+                path: "/accounts",
                 element: <Accounts />
             },
             {
-                path: "/dashboard/transactions",
+                path: "/transactions",
                 element: <Transactions />
             },
             {
-                path: "/dashboard/apply",
+                path: "/apply",
                 element: <ApplyForLoan />
             },
+            {
+                path: "/auth",
+                element: <div>register</div>
+            }
         ]
     },
-    {
-        path: "/auth",
-        element: <div>register</div>
-    }
+   
 ])
 
 const root = ReactDOM.createRoot(
