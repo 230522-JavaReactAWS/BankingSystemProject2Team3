@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/dashboard.css";
 import NavBar from "../components/navbar";
-import Accounts from "./accounts";
+import { Outlet } from "react-router-dom";
 
 export default function Dashboard() {
     React.useEffect(() => {
@@ -18,7 +18,7 @@ export default function Dashboard() {
         <div className="dashboard">
 
             <NavBar />
-            <Accounts />
+            <Outlet />
 
         </div>
     );
