@@ -15,11 +15,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -65,6 +64,13 @@ class RevaTrustApplicationTests {
 	}
 	@Test
 	void contextLoads() {
+	}
+	String testMessage = "JUnit Test message";
+	@Test
+	public void testMessage(){
+		System.out.println("Message Printes Successfully");
+		assertEquals(testMessage, "JUnit Test message");
+
 	}
 
 }
