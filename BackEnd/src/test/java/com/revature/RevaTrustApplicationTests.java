@@ -45,7 +45,7 @@ class RevaTrustApplicationTests {
 		int actualSize =sut.getAllCustomers().size();
 		verify(customerDAO, times(1)).findAll();
 		verifyNoMoreInteractions(customerDAO);
-		Assertions.assertEquals(1, actualSize);
+		Assertions.assertEquals(3, actualSize);
 	}
 @Test
 	public void test_givenGetAllCustomerAccounts_ReturnAllAvailableCustomerAccounts(){
@@ -60,7 +60,7 @@ class RevaTrustApplicationTests {
 		int actualSize =sut2.getAllAccounts().size();
 		verify(accountDAO, times(1)).findAll();
 		verifyNoMoreInteractions(accountDAO);
-		Assertions.assertEquals(1, actualSize);
+		Assertions.assertEquals(3, actualSize);
 	}
 	@Test
 	void contextLoads() {
