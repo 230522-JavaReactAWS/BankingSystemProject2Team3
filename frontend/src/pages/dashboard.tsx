@@ -1,7 +1,9 @@
 import React from "react";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import "../css/dashboard.css";
 import NavBar from "../components/navbar";
-import Accounts from "./accounts";
+import { Auth } from "../components/Auth";
+import Account from "../components/account";
 
 export default function Dashboard() {
     React.useEffect(() => {
@@ -15,11 +17,16 @@ export default function Dashboard() {
     }, [])
 
     return (
-        <div className="dashboard">
-
+        <div className="dashboard" style={{ backgroundImage: "url(/revatrustBackground.png)" }} >
             <NavBar />
-            <Accounts />
-
+            <div className="router">
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<Auth />}></Route>
+                        <Route path="/accounts" element={<Account />}></Route>
+                    </Routes>
+                </BrowserRouter>
+            </div>
         </div>
     );
 };
