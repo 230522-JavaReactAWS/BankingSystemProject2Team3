@@ -1,36 +1,6 @@
 package com.revature;
 
-import com.revature.daos.AccountDAO;
-import com.revature.daos.CustomerDAO;
-import com.revature.models.Account;
-import com.revature.models.Customer;
-import com.revature.services.AccountService;
-import com.revature.services.CustomerService;
 import org.junit.jupiter.api.Test;
-<<<<<<< HEAD
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.Optional;
-
-import static org.mockito.Mockito.when;
-
-@SpringBootTest
-@RunWith(MockitoJUnitRunner.class) //allows us to use mockito and JUnit for our tests. mockito "mocks a class"
-	//we test our classes using mockito to "mock" our database/classes so as to not mess up our db
-public class RevaTrustApplicationTests {
-
-
-	@Test
-	public void contextLoads() {
-	}
-
-
-
-=======
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -44,8 +14,9 @@ import com.revature.services.AccountService;
 import com.revature.services.CustomerService;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+import static assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,6 +79,5 @@ class RevaTrustApplicationTests {
         System.out.println("Message Printed Successfully");
         assertEquals(testMessage, "JUnit Test message");
     }
->>>>>>> 05b8c716196ff2fed1be9bede0a636fa59464c8b
 }
 
