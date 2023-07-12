@@ -15,11 +15,11 @@ export default function Dashboard() {
     }, [])
 
     return (
-        <div className="dashboard">
-
+        <div className="dashboard" style={{ backgroundImage: "url(/revatrustBackground.png)" }}>
             <NavBar />
-            <Outlet />
-
+            <div className="outlet">
+                <Outlet/>
+            </div>
         </div>
     );
 };
