@@ -6,7 +6,7 @@ import {
     Avatar, Tooltip, Menu, 
     MenuItem
 } from '@mui/material';
-import navLogo from "../assets/rLogo.png";
+import navLogo from "../assets/logoNav.png";
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -71,7 +71,6 @@ export default function NavBar() {
 
                         <Box sx={{ display: "flex", flexWrap: "nowrap", alignItems: "center", gap: "1em" }}>
                             <a href='/'><img src={navLogo} alt="navLogo" className='navLogo' /></a>
-                            <h2>RevaTrust</h2>
                         </Box>
 
                         <Box sx={{ display: { xs: "none", md: "flex" }, flexWrap: "nowrap" }}>
