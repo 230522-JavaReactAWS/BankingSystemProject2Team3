@@ -6,6 +6,7 @@ import {
     TableCell
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import "../css/transactions.css"
 
 
 export default function Transactions() {
@@ -42,13 +43,13 @@ export default function Transactions() {
 
     return (
         <Container sx={{ padding: "2em 1em" }}>
-            <Accordion>
+            <Accordion className='accountAccordion'>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <h2>View Transactions</h2>
                 </AccordionSummary>
                 <Divider />
                 <AccordionDetails>
-                    <Table>
+                    <Table className='transactionTable'>
                         <TableHead>
                             <TableRow>
                                 <TableCell>Date</TableCell>
