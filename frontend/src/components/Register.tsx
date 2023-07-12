@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import "../css/dashboard.css";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
@@ -41,7 +42,7 @@ export const Register: React.FC<any> = () => {
     return (
         <div>
             <h3>Register</h3>
-            <Form onSubmit={registerUser} className="postForm">
+            <Form onSubmit={registerUser} className="registerForm">
                 <Row>
                     <Form.Group as={Col} className="mb-3">
                         <Form.Label>Username:</Form.Label>
