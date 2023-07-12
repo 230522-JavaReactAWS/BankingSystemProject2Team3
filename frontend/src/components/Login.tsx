@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import "./Login.css"
+import "../css/Login.css"
 import axios from 'axios'
 
 export const Login: React.FC<any> = () => {
