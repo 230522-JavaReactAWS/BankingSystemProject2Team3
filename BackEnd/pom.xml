@@ -147,19 +147,17 @@
             <version>2.2.0</version>
         </dependency>
         <dependency>
-=======
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>2.1.214</version>
             <scope>runtime</scope>
->>>>>>> 05b8c716196ff2fed1be9bede0a636fa59464c8b
         </dependency>
 
     </dependencies>
     <build>
         <finalName>app</finalName>
         <plugins>
-            <plugin>
+            <plugin>i
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
