@@ -49,10 +49,10 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests() // Underneath here is where we describe the permissions we want to allow
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/customers/{id}/**").hasAuthority(customer)
-                .antMatchers("/customers/{id}/").hasAuthority(customer)
+                .antMatchers("/customers/{id}/**").permitAll()
+                .antMatchers("/customers/{id}/").permitAll()
                 .antMatchers(HttpMethod.PUT, "/customers").hasAuthority(customer)
-                .antMatchers("/transactions/**").hasAuthority(customer)
+                .antMatchers("/transactions/**").permitAll()
                 .antMatchers(HttpMethod.POST,"/transactions/status/{id}/{status}").hasAuthority(manager)
                 .antMatchers(HttpMethod.GET,"/transactions/").hasAuthority(manager)
                 .and()

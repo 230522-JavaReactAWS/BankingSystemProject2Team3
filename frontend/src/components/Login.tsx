@@ -24,7 +24,7 @@ export const Login: React.FC<any> = () => {
 
     //this function will gather the user input for username/password, and send a POST request to our backend
     const login = async () => {
-
+        
         //send an HTTP POST request with axios, and store the response in a variable that we can use
         const response = await axios
             .post(`${baseURL}/auth/login`, {...user})
@@ -32,6 +32,8 @@ export const Login: React.FC<any> = () => {
                 //if the login was successful, log the user in and store the JWT
                 console.log(response.data.accessToken)
                 //we can use the useNavigate variable above to switch URLs (thus switching components)
+                sessionStorage.setItem("username", user.username);
+                sessionStorage.setItem("token", response.data.accessToken);
                 navigate("/accounts")
             }
         )

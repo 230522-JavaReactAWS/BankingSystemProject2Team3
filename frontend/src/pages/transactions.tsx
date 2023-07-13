@@ -7,9 +7,33 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import "../css/transactions.css"
+import { getCustomerByUsername } from '../api/customers';
+import { getAllTransactions } from '../api/transactions';
 
 
 export default function Transactions() {
+    const [transactions, setTransactions] = React.useState([]);
+    const [username, setUsername] = React.useState(sessionStorage.getItem("username"));
+    const [role, setRole] = React.useState("");
+
+    React.useEffect(() => {
+        const fetchUser = async () => {
+            const transactionsData = await getAllTransactions();
+            setTransactions(transactionsData.data);
+            const userData = await getCustomerByUsername(username);
+            setRole(userData.data.role.roleTitle)
+        }
+        fetchUser();
+    }, []);
+
+    const userTransactions = transactions.filter((transaction:any) => transaction.customer.username === username);
+    
+    console.log(userTransactions);
+
+    const getDate = (time:any) => {
+        const date = new Date(time);
+        return date.toLocaleDateString();
+    }
 
     const transactionsData = [
         {
@@ -61,13 +85,23 @@ export default function Transactions() {
                         </TableHead>
                         <TableBody>
                             {
-                                transactionsData.map((transaction, i) => (
+                                role === "Manager" ?
+                                transactions.map((transaction:any, i) => (
                                     <TableRow key={i}>
-                                        <TableCell>{transaction.date}</TableCell>
+                                        <TableCell>{getDate(transaction.createdAt)}</TableCell>
                                         <TableCell>{transaction.description}</TableCell>
-                                        <TableCell>{transaction.type}</TableCell>
-                                        <TableCell>{transaction.amount}</TableCell>
-                                        <TableCell>{transaction.balance}</TableCell>
+                                        <TableCell>{transaction.origin.type}</TableCell>
+                                        <TableCell>${transaction.amount}</TableCell>
+                                        <TableCell>${transaction.origin.balance}</TableCell>
+                                    </TableRow>
+                                )) :
+                                userTransactions.map((transaction:any, i) => (
+                                    <TableRow key={i}>
+                                        <TableCell>{getDate(transaction.createdAt)}</TableCell>
+                                        <TableCell>{transaction.description}</TableCell>
+                                        <TableCell>{transaction.origin.type}</TableCell>
+                                        <TableCell>${transaction.amount}</TableCell>
+                                        <TableCell>${transaction.origin.balance}</TableCell>
                                     </TableRow>
                                 ))
                             }

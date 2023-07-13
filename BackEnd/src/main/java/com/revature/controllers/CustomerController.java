@@ -24,6 +24,10 @@ public class CustomerController {
     //Get one customer
     public Customer getCustomerByIdHandler(@PathVariable("id") int id){ return customerService.getCustomerById(id); }
 
+    //Get user information
+    @GetMapping("user/{username}")
+    public Customer getCustomerByUsernameHandler(@PathVariable("username") String username){ return customerService.getCustomerByUsername(username); }
+
     @GetMapping("{id}/accounts")
     //Get list of customer's accounts
     public List<Account> getCustomerAccountsHandler(@PathVariable("id") int id){ return customerService.getCustomerAccounts(id); }
