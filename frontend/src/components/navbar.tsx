@@ -2,20 +2,32 @@ import React from "react";
 import "../css/dashboard.css";
 import {
     Container, AppBar, Toolbar,
-    Box, Button, IconButton, 
-    Avatar, Tooltip, Menu, 
+    Box, Button, IconButton,
+    Avatar, Tooltip, Menu,
     MenuItem
 } from '@mui/material';
 import navLogo from "../assets/logoNav.png";
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from "react-router";
+import { getCustomerByUsername } from "../api/customers";
 
 export default function NavBar() {
     const [darkMode, setDarkMode] = React.useState(sessionStorage.getItem("darkMode"));
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const [user, setUser] = React.useState({ role: "", firstName: "" });
+
+    React.useEffect(() => {
+        const fetchUser = async () => {
+            const username = sessionStorage.getItem("username");
+            const response = await getCustomerByUsername(username);
+            setUser({ role: response.data.role.roleTitle, firstName: response.data.firstName });
+        }
+        fetchUser();
+    }, []);
 
     const handleDarkMode = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -41,44 +53,63 @@ export default function NavBar() {
 
     const navigate = useNavigate();
 
+    const handleLogout = () => {
+        sessionStorage.clear();
+        setAnchorElUser(null);
+        setUser({role: "", firstName: ""})
+        navigate("/");
+    }
+
     const pages = ["Accounts", "Transactions", "Apply for a Loan"];
-    const settings = ["Profile", "Dashboard", "Settings"];
+    const settings = ["Profile", "Dashboard", "Settings", "Log out"];
 
     return (
         <AppBar
-                className='navbar'
-                position='sticky'
-                sx={{
-                    backgroundColor: "var(--orange)", height: "4.5em", padding: "0.1em"
-                }}>
-                <Container maxWidth="xl">
-                    <Toolbar sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.5em" }} disableGutters>
+            className='navbar'
+            position='sticky'
+            sx={{
+                backgroundColor: "var(--orange)", height: "4.5em", padding: "0.1em"
+            }}>
+            <Container maxWidth="xl">
+                <Toolbar sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.5em" }} disableGutters>
 
-                        <Box sx={{display: {xs: "flex", md: "none"}}}>
-                            <IconButton onClick={handleOpenNav} sx={{ color: "white" }}>
-                                <MenuIcon />
-                            </IconButton>
-                            <Menu
-                                open={Boolean(anchorElNav)}
-                                anchorEl={anchorElNav}
-                                onClose={handleCloseNav}
-                                keepMounted
-                                className="menuList"
-                            >
-                                {pages.map((page, i) => (
-                                    <MenuItem onClick={handleCloseNav} key={i}>
-                                        <a style={{textDecoration: "none", color: "black"}} onClick={() => navigate(`/${page.split(" ")[0].toLowerCase()}`)}>{page}</a>
-                                    </MenuItem>
-                                ))}
-                            </Menu>
-                        </Box>
-
-                        <Box sx={{ display: "flex", flexWrap: "nowrap", alignItems: "center", gap: "1em" }}>
-                            <a href='/'><img src={navLogo} alt="navLogo" className='navLogo' /></a>
-                        </Box>
-
-                        <Box sx={{ display: { xs: "none", md: "flex" }, flexWrap: "nowrap" }}>
+                    <Box sx={{ display: { xs: "flex", md: "none" } }}>
+                        <IconButton onClick={handleOpenNav} sx={{ color: "white" }}>
+                            <MenuIcon />
+                        </IconButton>
+                        <Menu
+                            open={Boolean(anchorElNav)}
+                            anchorEl={anchorElNav}
+                            onClose={handleCloseNav}
+                            keepMounted
+                            className="menuList"
+                        >
                             {pages.map((page, i) => {
+                                if (i === 0 && user.role === "Manager") return "";
+                                if (i === 2 && user.role === "Manager") {
+                                    return (
+                                        <MenuItem onClick={handleCloseNav} key={i}>
+                                            <p onClick={() => navigate(`/${page.split(" ")[0].toLowerCase()}`)}>View Applications</p>
+                                        </MenuItem>
+                                    )
+                                }
+                                return (
+                                    <MenuItem onClick={handleCloseNav} key={i}>
+                                        <p onClick={() => navigate(`/${page.split(" ")[0].toLowerCase()}`)}>{page}</p>
+                                    </MenuItem>
+                                )
+                            })}
+                        </Menu>
+                    </Box>
+
+                    <Box sx={{ display: "flex", flexWrap: "nowrap", alignItems: "center", gap: "1em" }}>
+                        <a href='/'><img src={navLogo} alt="navLogo" className='navLogo' /></a>
+                    </Box>
+
+                    <Box sx={{ display: { xs: "none", md: "flex" }, flexWrap: "nowrap" }}>
+                        {pages.map((page, i) => {
+                            if (i === 0 && user.role === "Manager") return "";
+                            if (i === 2 && user.role === "Manager") {
                                 return (
                                     <Button
                                         onClick={() => navigate(`/${page.split(" ")[0].toLowerCase()}`)}
@@ -86,38 +117,54 @@ export default function NavBar() {
                                             color: "white", fontSize: "1em"
                                         }}
                                         key={i}
-                                    >{page}
+                                    >View Applications
                                     </Button>
                                 )
-                            })}
-                        </Box>
+                            }
+                            return (
+                                <Button
+                                    onClick={() => navigate(`/${page.split(" ")[0].toLowerCase()}`)}
+                                    sx={{
+                                        color: "white", fontSize: "1em"
+                                    }}
+                                    key={i}
+                                >{page}
+                                </Button>
+                            )
+                        })}
+                    </Box>
 
-                        <Box sx={{ display: "flex", flexWrap: "nowrap" }}>
-                            <IconButton onClick={handleDarkMode} sx={{ color: "white" }}>
-                                {darkMode === "true" ? <LightModeIcon /> : <DarkModeIcon />}
+                    <Box sx={{ display: "flex", flexWrap: "nowrap" }}>
+                        <IconButton onClick={handleDarkMode} sx={{ color: "white" }}>
+                            {darkMode === "true" ? <LightModeIcon /> : <DarkModeIcon />}
+                        </IconButton>
+                        <Tooltip title="Account settings" arrow>
+                            <IconButton onClick={handleOpenUser} size="small">
+                                <Avatar sx={{ height: "1.5em", width: "1.5em", backgroundColor: "white", color: "var(--orange)" }}>{user.firstName !== "" ? user.firstName.charAt(0).toUpperCase() : <AccountCircleIcon />}</Avatar>
                             </IconButton>
-                            <Tooltip title="Account settings" arrow>
-                                <IconButton onClick={handleOpenUser} size="small">
-                                    <Avatar sx={{ height: "1.5em", width: "1.5em", backgroundColor: "white", color: "var(--orange)" }} alt="Rafael Lopez" src="">R</Avatar>
-                                </IconButton>
-                            </Tooltip>
-                            <Menu
-                                open={Boolean(anchorElUser)}
-                                anchorEl={anchorElUser}
-                                onClose={handleCloseUser}
-                                keepMounted
-                                className="menuList"
-                            >
-                                {settings.map((setting, i) => {
+                        </Tooltip>
+                        <Menu
+                            open={Boolean(anchorElUser)}
+                            anchorEl={anchorElUser}
+                            onClose={handleCloseUser}
+                            keepMounted
+                            className="menuList"
+                        >
+                            {settings.map((setting, i) => {
+                                if (i === 3) {
                                     return (
-                                        <MenuItem onClick={handleCloseUser} key={i}>{setting}</MenuItem>
+                                        <MenuItem onClick={handleLogout} key={i}>{setting}</MenuItem>
                                     )
-                                })}
-                            </Menu>
-                        </Box>
+                                }
+                                return (
+                                    <MenuItem onClick={handleCloseUser} key={i}>{setting}</MenuItem>
+                                )
+                            })}
+                        </Menu>
+                    </Box>
 
-                    </Toolbar>
-                </Container>
-            </AppBar>
+                </Toolbar>
+            </Container>
+        </AppBar>
     )
 }

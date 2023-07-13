@@ -5,6 +5,8 @@ import com.revature.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("accounts")
 @CrossOrigin(origins = {"http://localhost:3000", "http://my-project2-bucket.s3-website-us-east-1.amazonaws.com" })
@@ -16,6 +18,9 @@ public class AccountController {
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
     }
+
+    @GetMapping
+    public List<Account> getAllAccountsHandler(){return accountService.getAllAccounts(); }
 
     @GetMapping("{id}")
     //Get one account
