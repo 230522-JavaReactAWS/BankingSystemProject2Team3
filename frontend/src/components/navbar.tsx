@@ -60,6 +60,7 @@ export default function NavBar() {
                                 anchorEl={anchorElNav}
                                 onClose={handleCloseNav}
                                 keepMounted
+                                className="menuList"
                             >
                                 {pages.map((page, i) => (
                                     <MenuItem onClick={handleCloseNav} key={i}>
@@ -102,6 +103,7 @@ export default function NavBar() {
                                 anchorEl={anchorElUser}
                                 onClose={handleCloseUser}
                                 keepMounted
+                                className="menuList"
                             >
                                 {settings.map((setting, i) => {
                                     return (

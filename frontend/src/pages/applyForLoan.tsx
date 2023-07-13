@@ -1,5 +1,13 @@
+import LoanForm from "../components/loanForm";
+import LoanTable from "../components/loanTable";
+import { Container } from '@mui/material';
+import '../css/loans.css'
+
 export default function ApplyForLoan() {
     return (
-        <div>Apply or View pending applications</div>
+        <Container>
+            <LoanForm />
+            {/* <LoanTable /> */}
+        </Container>
     )
 }

@@ -33,6 +33,7 @@ export default function Account(props: any) {
                             anchorEl={anchorElMore}
                             onClose={handleCloseMore}
                             keepMounted
+                            className="menuList"
                         >
                             {
                                 moreOptions.map((option, i) => (
@@ -74,6 +75,7 @@ export default function Account(props: any) {
                             anchorEl={anchorElMore}
                             onClose={handleCloseMore}
                             keepMounted
+                            className="menuList"
                         >
                             {
                                 creditOptions.map((option, i) => (

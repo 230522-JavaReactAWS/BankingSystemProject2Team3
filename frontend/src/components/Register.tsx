@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { baseURL } from '../api/constants';
 
 export const Register: React.FC<any> = () => {
 
@@ -29,7 +30,7 @@ export const Register: React.FC<any> = () => {
     const registerUser = (e:any) => {
         e.preventDefault();
         axios
-            .post('http://ec2-54-86-199-163.compute-1.amazonaws.com/auth/register', {...user})
+            .post(`${baseURL}/auth/register`, {...user})
             .then((response) => {
                 console.log('Response', response.data );
             })
