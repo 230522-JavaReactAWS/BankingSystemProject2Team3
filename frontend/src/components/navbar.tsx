@@ -10,6 +10,7 @@ import navLogo from "../assets/logoNav.png";
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useNavigate } from "react-router";
 
 export default function NavBar() {
     const [darkMode, setDarkMode] = React.useState(sessionStorage.getItem("darkMode"));
@@ -38,6 +39,8 @@ export default function NavBar() {
 
     const handleCloseNav = () => setAnchorElNav(null);
 
+    const navigate = useNavigate();
+
     const pages = ["Accounts", "Transactions", "Apply for a Loan"];
     const settings = ["Profile", "Dashboard", "Settings"];
 
@@ -64,7 +67,7 @@ export default function NavBar() {
                             >
                                 {pages.map((page, i) => (
                                     <MenuItem onClick={handleCloseNav} key={i}>
-                                        <a style={{textDecoration: "none", color: "black"}} href={`/${page.split(" ")[0].toLowerCase()}`}>{page}</a>
+                                        <a style={{textDecoration: "none", color: "black"}} onClick={() => navigate(`/${page.split(" ")[0].toLowerCase()}`)}>{page}</a>
                                     </MenuItem>
                                 ))}
                             </Menu>
@@ -78,7 +81,7 @@ export default function NavBar() {
                             {pages.map((page, i) => {
                                 return (
                                     <Button
-                                        href={`/${page.split(" ")[0].toLowerCase()}`}
+                                        onClick={() => navigate(`/${page.split(" ")[0].toLowerCase()}`)}
                                         sx={{
                                             color: "white", fontSize: "1em"
                                         }}
