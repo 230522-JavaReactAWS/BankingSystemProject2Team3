@@ -68,6 +68,16 @@ export default function NavBar() {
         navigate("/");
     }
 
+    const handleLogo = () => {
+        if (user.role === "Manager") {
+            navigate("/transactions");
+        } else if (user.role === "Customer") {
+            navigate("/accounts");
+        } else {
+            navigate("/");
+        }
+    }
+
     const pages = ["Accounts", "Transactions", "Apply for a Loan"];
     const settings = ["Profile", "Dashboard", "Settings", "Log out"];
 
@@ -115,7 +125,7 @@ export default function NavBar() {
                     </Box>
 
                     <Box sx={{ display: "flex", flexWrap: "nowrap", alignItems: "center", gap: "1em" }}>
-                        <a href='/'><img src={navLogo} alt="navLogo" className='navLogo' /></a>
+                        <img style={{cursor: "pointer"}} onClick={handleLogo} src={navLogo} alt="navLogo" className='navLogo' />
                     </Box>
 
                     <Box sx={{ display: { xs: "none", md: "flex" }, flexWrap: "nowrap" }}>
