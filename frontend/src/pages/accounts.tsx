@@ -1,3 +1,5 @@
+import React from "react";
+import axios from "axios";
 import {
     Container, Accordion, AccordionSummary,
     AccordionDetails, Box, Divider
@@ -6,6 +8,21 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Account from '../components/account';
 
 export default function Accounts() {
+
+    React.useEffect(() => {
+        axios
+            .get("http://localhost:8080/customers/username/" + sessionStorage.getItem("username"),{
+                headers: {
+                    Authorization: "Bearer: " + sessionStorage.getItem("token")
+                }
+            })
+            .then((response) =>{
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    },[])
 
     const accountsData = [
         {

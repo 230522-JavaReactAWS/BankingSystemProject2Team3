@@ -29,7 +29,12 @@ export const Login: React.FC<any> = () => {
             .post("http://localhost:8080/auth/login", {...user})
             .then((response) => {
                 //if the login was successful, log the user in and store the JWT
-                console.log(response.data.accessToken)
+                sessionStorage.setItem("username", user.username)
+                sessionStorage.setItem("token", response.data.accessToken)
+
+                console.log( sessionStorage.getItem("username") );
+                console.log( sessionStorage.getItem("token") );
+                
                 //we can use the useNavigate variable above to switch URLs (thus switching components)
                 navigate("/accounts")
             }
@@ -37,8 +42,6 @@ export const Login: React.FC<any> = () => {
         .catch((error) => {
             alert("Login failed! Please try again...")
         })
-
-        console.log(response)
     }
 
     return(

@@ -10,11 +10,34 @@ import navLogo from "../assets/logoNav.png";
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import MenuIcon from '@mui/icons-material/Menu';
+import axios from "axios";
 
 export default function NavBar() {
     const [darkMode, setDarkMode] = React.useState(sessionStorage.getItem("darkMode"));
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+
+    //State object to hold user
+    const [customer,setCustomer] = React.useState(null);
+
+    //find user with token from session
+    React.useEffect(() => {
+        if ( sessionStorage.getItem("username") ){
+            axios
+                .get("http://localhost:8080/customers/username/" + sessionStorage.getItem("username"),{
+                    headers: {
+                        Authorization: sessionStorage.getItem("token")
+                    }
+                })
+                .then((response) =>{
+                    console.log(response.data);
+                    setCustomer(response.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        }
+    }, [sessionStorage.getItem("token")])
 
     const handleDarkMode = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -71,6 +94,7 @@ export default function NavBar() {
 
                         <Box sx={{ display: "flex", flexWrap: "nowrap", alignItems: "center", gap: "1em" }}>
                             <a href='/'><img src={navLogo} alt="navLogo" className='navLogo' /></a>
+                            {sessionStorage.getItem("token") ? <p>Welcome { sessionStorage.getItem("username") }</p> : <p>Welcome User!</p>}
                         </Box>
 
                         <Box sx={{ display: { xs: "none", md: "flex" }, flexWrap: "nowrap" }}>

@@ -51,6 +51,7 @@ public class SecurityConfig {
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/customers/{id}/**").hasAuthority(customer)
                 .antMatchers("/customers/{id}/").hasAuthority(customer)
+                .antMatchers(HttpMethod.GET,"/customers/username/{username}").hasAuthority(customer)
                 .antMatchers(HttpMethod.PUT, "/customers").hasAuthority(customer)
                 .antMatchers("/transactions/**").hasAuthority(customer)
                 .antMatchers(HttpMethod.POST,"/transactions/status/{id}/{status}").hasAuthority(manager)

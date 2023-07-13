@@ -18,7 +18,7 @@ export default function Dashboard() {
         <div className="dashboard" style={{ backgroundImage: "url(/revatrustBackground.png)" }}>
             <NavBar />
             <div className="outlet">
-                <Outlet/>
+                <Outlet />
             </div>
         </div>
     );
