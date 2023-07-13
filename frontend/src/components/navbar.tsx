@@ -28,9 +28,10 @@ export default function NavBar() {
             const username = sessionStorage.getItem("username");
             const response = await getCustomerByUsername(username);
             setUser({ role: response.data.role.roleTitle, firstName: response.data.firstName });
-            if (response.data.role.roleTitle === "Manager") {
+            if (response.data.role.roleTitle === "Manager" && location.pathname === "/accounts") {
                 navigate("/transactions");
             }
+            console.log(location.pathname)
         }
         fetchUser();
     }, [location.pathname]);
