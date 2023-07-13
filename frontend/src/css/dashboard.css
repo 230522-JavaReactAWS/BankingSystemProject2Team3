@@ -30,6 +30,10 @@
     color: white;
 }
 
+.accountAccordion {
+    overflow: auto;
+}
+
 .accountType {
     color: var(--dark-gray);
 }
