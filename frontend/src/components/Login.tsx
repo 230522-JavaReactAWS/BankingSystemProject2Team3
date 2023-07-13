@@ -26,7 +26,7 @@ export const Login: React.FC<any> = () => {
 
         //send an HTTP POST request with axios, and store the response in a variable that we can use
         const response = await axios
-            .post("http://localhost:8080/auth/login", {user})
+            .post("http://localhost:8080/auth/login", {...user})
             .then((response) => {
                 //if the login was successful, log the user in and store the JWT
                 console.log(response.data.accessToken)
