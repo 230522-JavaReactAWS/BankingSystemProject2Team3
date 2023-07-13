@@ -29,7 +29,7 @@ export const Register: React.FC<any> = () => {
     const registerUser = (e:any) => {
         e.preventDefault();
         axios
-            .post('http://localhost:8080/auth/register', {...user})
+            .post('http://ec2-54-86-199-163.compute-1.amazonaws.com/auth/register', {...user})
             .then((response) => {
                 console.log('Response', response.data );
             })

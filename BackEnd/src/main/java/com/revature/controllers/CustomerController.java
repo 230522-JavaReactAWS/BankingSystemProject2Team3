@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("customers")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://my-project2-bucket.s3-website-us-east-1.amazonaws.com" })
 public class CustomerController {
 
     private final CustomerService customerService;
