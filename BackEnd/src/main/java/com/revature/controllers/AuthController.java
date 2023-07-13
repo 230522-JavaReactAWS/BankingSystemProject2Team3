@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("auth")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://my-project2-bucket.s3-website-us-east-1.amazonaws.com" })
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
