@@ -13,6 +13,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from "react-router";
 import { getCustomerByUsername } from "../api/customers";
+import { useLocation } from "react-router-dom";
 
 export default function NavBar() {
     const [darkMode, setDarkMode] = React.useState(sessionStorage.getItem("darkMode"));
@@ -20,6 +21,8 @@ export default function NavBar() {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
     const [user, setUser] = React.useState({ role: "", firstName: "" });
 
+    const location = useLocation();
+    
     React.useEffect(() => {
         const fetchUser = async () => {
             const username = sessionStorage.getItem("username");
@@ -27,7 +30,8 @@ export default function NavBar() {
             setUser({ role: response.data.role.roleTitle, firstName: response.data.firstName });
         }
         fetchUser();
-    }, []);
+    }, [location.pathname]);
+    
 
     const handleDarkMode = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -56,7 +60,7 @@ export default function NavBar() {
     const handleLogout = () => {
         sessionStorage.clear();
         setAnchorElUser(null);
-        setUser({role: "", firstName: ""})
+        setUser({ role: "", firstName: "" })
         navigate("/");
     }
 
@@ -84,7 +88,9 @@ export default function NavBar() {
                             keepMounted
                             className="menuList"
                         >
-                            {pages.map((page, i) => {
+                            {
+                                user.role !== "" ?
+                            pages.map((page, i) => {
                                 if (i === 0 && user.role === "Manager") return "";
                                 if (i === 2 && user.role === "Manager") {
                                     return (
@@ -98,7 +104,9 @@ export default function NavBar() {
                                         <p onClick={() => navigate(`/${page.split(" ")[0].toLowerCase()}`)}>{page}</p>
                                     </MenuItem>
                                 )
-                            })}
+                            })
+                            : <MenuItem onClick={handleCloseNav}><p onClick={() => navigate("/")}>Register / Login</p></MenuItem>
+                            }
                         </Menu>
                     </Box>
 
@@ -107,31 +115,43 @@ export default function NavBar() {
                     </Box>
 
                     <Box sx={{ display: { xs: "none", md: "flex" }, flexWrap: "nowrap" }}>
-                        {pages.map((page, i) => {
-                            if (i === 0 && user.role === "Manager") return "";
-                            if (i === 2 && user.role === "Manager") {
-                                return (
-                                    <Button
-                                        onClick={() => navigate(`/${page.split(" ")[0].toLowerCase()}`)}
-                                        sx={{
-                                            color: "white", fontSize: "1em"
-                                        }}
-                                        key={i}
-                                    >View Applications
-                                    </Button>
-                                )
-                            }
-                            return (
-                                <Button
-                                    onClick={() => navigate(`/${page.split(" ")[0].toLowerCase()}`)}
+                        {
+                            user.role !== "" ?
+                                pages.map((page, i) => {
+
+                                    if (i === 0 && user.role === "Manager") return "";
+                                    if (i === 2 && user.role === "Manager") {
+                                        return (
+                                            <Button
+                                                onClick={() => navigate(`/${page.split(" ")[0].toLowerCase()}`)}
+                                                sx={{
+                                                    color: "white", fontSize: "1em"
+                                                }}
+                                                key={i}
+                                            >View Applications
+                                            </Button>
+                                        )
+                                    }
+                                    return (
+                                        <Button
+                                            onClick={() => navigate(`/${page.split(" ")[0].toLowerCase()}`)}
+                                            sx={{
+                                                color: "white", fontSize: "1em"
+                                            }}
+                                            key={i}
+                                        >{page}
+                                        </Button>
+                                    )
+                                })
+                                : <Button
+                                    onClick={() => navigate("/")}
                                     sx={{
                                         color: "white", fontSize: "1em"
                                     }}
-                                    key={i}
-                                >{page}
+                                >Register / Login
                                 </Button>
-                            )
-                        })}
+                        }
+
                     </Box>
 
                     <Box sx={{ display: "flex", flexWrap: "nowrap" }}>
